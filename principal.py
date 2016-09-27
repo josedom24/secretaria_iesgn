@@ -1,7 +1,9 @@
 from bottle import app, route, template, run, static_file, error,request,response,redirect,error
 import sesion
+import hashlib
 from gestiona import *
 from beaker.middleware import SessionMiddleware
+from model import *
 
 session_opts = {
     'session.type': 'file',
@@ -22,15 +24,11 @@ def do_login():
     
     username = request.forms.get('username')
     password = request.forms.get('password')
-    lldap=LibLDAP(username,password)
-
-    if lldap.isbind:
-        busqueda='(uid=%s)'%username
-        resultados=lldap.buscar(busqueda)
-        info=resultados[0].get_attributes()
+    usu=Usuario.select().where(Usuario.Usuario==username,Usuario.Pass==hashlib.md5(password).hexdigest())
+    if usu.count()==1:  
         sesion.set("user",username) 
         sesion.set("pass",password)    
-        sesion.set("grupo",info["gidNumber"][0])
+        sesion.set("grupo",Usuario.select().where(Usuario.Usuario==username)[0].Perfil)
         redirect('/')
     else:
         info={"error":True}

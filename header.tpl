@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <!--<link rel="icon" href="../../favicon.ico">-->
 
-    <title>Gestiona</title>
+    <title>Gestiona IESGN</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -38,17 +38,8 @@
       <!-- The justified navigation menu is meant for single line per list item.
            Multiple lines will require custom code not provided by Bootstrap. -->
       <div class="masthead">
-        <h3 class="text-muted">Gestiona - Gestión de Usuarios</h3>
-        <nav>
-          <ul class="nav nav-justified">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Portal</a></li>
-            <li><a href="#">Redmine</a></li>
-            <li><a href="#">Plataforma Moodle</a></li>
-            <li><a href="#">Antiguos cursos</a></li>
-            <li><a href="#">Instituto</a></li>
-          </ul>
-        </nav>
+        <h3 class="text-muted">Gestiona - IES Gonzalo Nazareno</h3>
+        
       </div>
 
       <!-- Jumbotron -->
