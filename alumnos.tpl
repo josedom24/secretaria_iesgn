@@ -1,5 +1,5 @@
 % include('header.tpl',info=info)
-% from gestiona import tipos
+
  <h3>Búsqueda</h3>
  <form action="/alumnos" method="post" class="form-horizontal">
         
@@ -10,8 +10,8 @@
                 % for c in info["cursos"]:
                 % if info["params"].get("curso")==str(c.get_id()):
                   <option selected="selected" value="{{c.get_id()}}">{{c.Curso}}</option>
-                %else:
-                  <option value="{{c.get_id()}}">{{c.Curso)}}</option>
+                % else:
+                    <option value="{{c.get_id()}}">{{c.Curso}}</option>
                 % end
                 % end
                 </select>

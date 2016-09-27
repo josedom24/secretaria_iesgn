@@ -46,7 +46,7 @@ def do_logout():
 def alumnos():
     if sesion.islogin():
         info={}
-        curso=1 if request.forms.get("curso") is None else request.forms.get("curso")
+        curso="1" if request.forms.get("curso") is None else request.forms.get("curso")
         info["params"]={"curso":curso}
         info["alumnos"]=Alumno.select().where(Alumno.Unidad==curso)
         info["cursos"]=Curso.select()    
