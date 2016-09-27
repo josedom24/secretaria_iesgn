@@ -7,11 +7,11 @@
             <label class="control-label col-xs-2">Curso:</label>
             <div class="col-xs-4">
                 <select name="curso" class="form-control">
-                % for i in xrange(0,9):
-                % if info["params"].get("t")==str(i):
-                  <option selected="selected" value="{{i}}">{{tipos(str(i))}}</option>
+                % for c in info["cursos"]:
+                % if info["params"].get("curso")==str(c.get_id()):
+                  <option selected="selected" value="{{c.get_id()}}">{{c.Curso}}</option>
                 %else:
-                  <option value="{{i}}">{{tipos(str(i))}}</option>
+                  <option value="{{c.get_id()}}">{{c.Curso)}}</option>
                 % end
                 % end
                 </select>
@@ -29,25 +29,25 @@
     <a href="/usuarios/add"><button type="submit" class="btn btn-primary">Nuevo usuario</button></a>
     <a href="/usuarios/tipo"><button type="submit" class="btn btn-primary">Asignar Tipo</button></a>
 
- <br/><h2>Usuarios</h2>
+ <br/><h2>Alumnos</h2>
 
 <table class="table table-bordered">
     <tr><td>N.</td><td>A/P</td><td>Usuario (Login)</td><td>Tipo</td><td>Mod.</td><td>Borrar</td></tr>
     <% 
     cont=0
-    for r in info["resultados"]:
+    for r in info["alumnos"]:
     cont=cont+1 %>
     <tr>
       <td>{{cont}}</td>
-      % if r.get_attr_values("gidnumber")[0]=="2001":
+      
         <td><span class="glyphicon glyphicon-user" aria-hidden="true"></td>
-      % else:
+      
         <td><span class="glyphicon glyphicon-education" aria-hidden="true"></td>
-      % end  
-      <td>{{r.get_attr_values("sn")[0]+" "+r.get_attr_values("givenname")[0]}} ({{r.get_attr_values("uid")[0]}})</td>
-      <td>{{tipos(r.get_attr_values("description")[0])}}</td>
-      <td><a href="usuarios/modificar/{{r.get_attr_values('uid')[0]}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-      <td><a href="usuarios/borrar/{{r.get_attr_values('uid')[0]}}"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a></td>
+        
+      <td>{{r.Nombre}}</td>
+      
+      <td><a href="usuarios/modificar/{{r.get_id()}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+      <td><a href="usuarios/borrar/{{r.get_id()}}"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a></td>
       
     </tr>
     % end

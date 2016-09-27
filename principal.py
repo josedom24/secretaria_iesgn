@@ -48,7 +48,8 @@ def alumnos():
         info={}
         curso=1 if request.forms.get("curso") is None else request.forms.get("curso")
         info["params"]={"curso":curso}
-        
+        info["alumnos"]=Alumno.select().where(Alumno.Unidad==curso)
+        info["cursos"]=Curso.select()    
         
         return my_template('alumnos.tpl',info=info)
     else:
