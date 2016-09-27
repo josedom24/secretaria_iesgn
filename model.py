@@ -29,7 +29,7 @@ class Profesor(Model):
 		database = db 
 
 class Curso(Model):
-	Curso = CharField(max_length=30,primary_key=True)
+	Curso = CharField(max_length=30)
 	Tutor = ForeignKeyField(Profesor, related_name='Tutor_de',null=True)
 
 	class Meta:

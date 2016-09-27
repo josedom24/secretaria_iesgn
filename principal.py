@@ -26,9 +26,8 @@ def do_login():
     password = request.forms.get('password')
     usu=Usuario.select().where(Usuario.Usuario==username,Usuario.Pass==hashlib.md5(password).hexdigest())
     if usu.count()==1:  
-        sesion.set("user",username) 
-        sesion.set("pass",password)    
-        sesion.set("grupo",Usuario.select().where(Usuario.Usuario==username)[0].Perfil)
+        sesion.set("user",username)    
+        sesion.set("grupo",usu[0].Perfil)
         redirect('/')
     else:
         info={"error":True}
@@ -41,30 +40,21 @@ def do_logout():
     redirect('/')
 
 
-#
 
-#@route('/usuarios',method=['get','post'])
-#def usuarios():
-#    if sesion.islogin() and sesion.isprofesor():
-#        info={}
-#        tipo="*" if request.forms.get("t")=="0" or request.forms.get("t") is None else request.forms.get("t")
-#        givenname="*" if request.forms.get("q") is None else request.forms.get("q")+"*"
-#        busqueda='(&(givenname=%s)(description=%s))'%(givenname,tipo)
-#        
-#        givenname=givenname[:-1]
-#        if tipo=="*":
-#            tipo="0"#
 
-#        info["params"]={"q":givenname,"t":tipo}
-#        lldap=LibLDAP()
-#        resultados=lldap.buscar(busqueda)
-#        info["resultados"]=resultados
-#        
-#        return my_template('usuarios.tpl',info=info)
-#    else:
-#        redirect('/')#
-#
-#
+@route('/alumnos',method=['get','post'])
+def alumnos():
+    if sesion.islogin():
+        info={}
+        curso=1 if request.forms.get("curso") is None else request.forms.get("curso")
+        info["params"]={"curso":curso}
+        
+        
+        return my_template('alumnos.tpl',info=info)
+    else:
+        redirect('/')#
+
+
 
 #@route('/usuarios/add',method=['get','post'])
 #def add():
