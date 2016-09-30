@@ -13,7 +13,6 @@ session_opts = {
 }
 app = SessionMiddleware(app(), session_opts)
 
-
 @route('/')
 @route('/login',method="get")
 def index():
@@ -39,21 +38,10 @@ def do_logout():
     sesion.delete()
     redirect('/')
 
+__import__("alumnos.views")
 
 
 
-@route('/alumnos',method=['get','post'])
-def alumnos():
-    if sesion.islogin():
-        info={}
-        curso="1" if request.forms.get("curso") is None else request.forms.get("curso")
-        info["params"]={"curso":curso}
-        info["alumnos"]=Alumno.select().where(Alumno.Unidad==curso)
-        info["cursos"]=Curso.select()    
-        
-        return my_template('alumnos.tpl',info=info)
-    else:
-        redirect('/')#
 
 
 
