@@ -4,6 +4,7 @@ import hashlib
 from gestiona import *
 from beaker.middleware import SessionMiddleware
 from model import *
+from sys import argv
 
 session_opts = {
     'session.type': 'file',
