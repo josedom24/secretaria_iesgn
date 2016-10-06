@@ -44,7 +44,6 @@ __import__("alumnos.views")
 
 
 
-
 #@route('/usuarios/add',method=['get','post'])
 #def add():
 #    if sesion.islogin() and sesion.isprofesor():
