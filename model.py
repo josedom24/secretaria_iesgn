@@ -68,5 +68,22 @@ class Usuario(Model):
 	class Meta:
 		database = db 
 
+class Amonestacion(Model):
+	hora = (
+		('1','Primera'),
+		('2','Segunda'),
+		('3','Tercera'),
+		('4','Recreo'),
+		('5','Cuarta'),
+		('6','Quinta'),
+		('7','Sexta'),
 
-
+	)
+	IdAlumno = ForeignKeyField(Alumno)
+	Fecha = DateField()
+	Hora = CharField(max_length=1,choices=hora,default='1')
+	Comentario=TextField()
+	Profesor = ForeignKeyField(Profesor)
+	
+	class Meta:
+		database = db 
