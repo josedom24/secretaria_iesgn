@@ -32,7 +32,8 @@ def amonestacion(id):
     if sesion.islogin():
         info={}
         info["id"]=id
-        info["dia"]=time.strftime('%d/%m/%y')
+        info["dia"]=time.strftime('%d/%m/%Y')
+        info["profesor"]=Profesor.select() 
         return my_template('amonestacion.tpl',info=info)
     else:
         redirect('/')
