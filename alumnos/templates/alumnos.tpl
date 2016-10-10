@@ -39,11 +39,11 @@
         
       <td>{{r.Nombre}}</td>
       <td>0/0</td>
-      <td><a href="usuarios/amonestacion/{{r.get_id()}}"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></a></td>
-      <td><a href="usuarios/sancion/{{r.get_id()}}"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a></td>
-      <td><a href="usuarios/historial/{{r.get_id()}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></td>
-      <td><a href="usuarios/modificar/{{r.get_id()}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-      <td><a href="usuarios/borrar/{{r.get_id()}}"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a></td>
+      <td><a href="alumnos/amonestacion/{{r.get_id()}}"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></a></td>
+      <td><a href="alumnos/sancion/{{r.get_id()}}"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a></td>
+      <td><a href="alumnos/historial/{{r.get_id()}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></td>
+      <td><a href="alumnos/modificar/{{r.get_id()}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+      <td><a href="alumnos/borrar/{{r.get_id()}}"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a></td>
       
     </tr>
     % end

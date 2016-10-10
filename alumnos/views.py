@@ -3,9 +3,11 @@ import bottle
 import os
 import sesion
 import hashlib
+import time
 from gestiona import *
 from beaker.middleware import SessionMiddleware
 from model import *
+
 
 base_path = os.path.abspath(os.path.dirname(__file__))
 alumnos_path = os.path.join(base_path, 'templates')
@@ -22,5 +24,15 @@ def alumnos():
         print bottle.TEMPLATE_PATH
         
         return my_template('alumnos.tpl',info=info)
+    else:
+        redirect('/')
+
+@route('/alumnos/amonestacion/<id>',method='get')
+def amonestacion(id):
+    if sesion.islogin():
+        info={}
+        info["id"]=id
+        info["dia"]=time.strftime('%d/%m/%y')
+        return my_template('amonestacion.tpl',info=info)
     else:
         redirect('/')
