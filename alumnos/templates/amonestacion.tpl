@@ -1,7 +1,8 @@
 % include('header.tpl',info=info)
 
  <h3>Amonestación</h3>
- <form>
+ <h4>{{info["alumno"].Nombre+"-"+ info["alumno"].Unidad.Curso}}</h4>
+ <form action="/alumnos/amonestacion/new" method="post">
 
   <div class="form-group">
     <label>Fecha</label>
@@ -27,7 +28,7 @@
 
   <div class="form-group">
     <label>Hora:</label>
-    <select class="form-control" id="exampleSelect1">
+    <select class="form-control" name="hora">
       <option value="1">Primera</option>
       <option value="2">Segunda</option>
       <option value="3">Tercera</option>

@@ -34,6 +34,14 @@ def amonestacion(id):
         info["id"]=id
         info["dia"]=time.strftime('%d/%m/%Y')
         info["profesor"]=Profesor.select() 
+        info["alumno"]=Alumno.get(Alumno.id==id)
         return my_template('amonestacion.tpl',info=info)
+    else:
+        redirect('/')
+
+@route('/alumnos/amonestacion/new',method='post')
+def amonestacion_new():
+    if sesion.islogin():
+        return request.forms.get("fecha")
     else:
         redirect('/')
