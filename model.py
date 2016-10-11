@@ -87,3 +87,15 @@ class Amonestacion(Model):
 	
 	class Meta:
 		database = db 
+
+class Sancion(Model):
+	
+	IdAlumno = ForeignKeyField(Alumno)
+	Fecha = DateField()
+	Fecha_fin = DateField()
+	Sancion= 	CharField(max_length=100)
+	Comentario=TextField()
+	Profesor = ForeignKeyField(Profesor)
+	
+	class Meta:
+		database = db 

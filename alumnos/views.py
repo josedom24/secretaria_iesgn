@@ -46,3 +46,15 @@ def amonestacion_new():
         redirect('/alumnos')
     else:
         redirect('/')
+
+@route('/alumnos/sancion/<id>',method='get')
+def sancion(id):
+    if sesion.islogin():
+        info={}
+        info["id"]=id
+        info["dia"]=time.strftime('%d/%m/%Y')
+        info["profesor"]=Profesor.select() 
+        info["alumno"]=Alumno.get(Alumno.id==id)
+        return my_template('sancion.tpl',info=info)
+    else:
+        redirect('/')

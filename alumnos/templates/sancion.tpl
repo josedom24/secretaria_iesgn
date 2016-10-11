@@ -1,12 +1,22 @@
 % include('header.tpl',info=info)
 
- <h3>Amonestación</h3>
+ <h3>Sanción</h3>
  <h4>{{info["alumno"].Nombre+"-"+ info["alumno"].Unidad.Curso}}</h4>
- <form action="/alumnos/amonestacion/new" method="post">
+ <form action="/alumnos/sancion/new" method="post">
 
   <div class="form-group">
     <label>Fecha:</label>
        <input type="text" value="{{info["dia"]}}" class="form-control" id="fecha" name="Fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" required autofocus>
+  </div>
+
+  <div class="form-group">
+    <label>Fecha finalización:</label>
+       <input type="text" value="{{info["dia"]}}" class="form-control" id="fecha" name="Fecha_fin" pattern="\d{1,2}/\d{1,2}/\d{4}" required>
+  </div>
+
+  <div class="form-group">
+    <label>Sanción:</label>
+       <input type="text" class="form-control" name="Sancion" required>
   </div>
 
   <div class="form-group">
@@ -26,19 +36,6 @@
 
 
 
-  <div class="form-group">
-    <label>Hora:</label>
-    <select class="form-control" name="Hora">
-      <option value="1">Primera</option>
-      <option value="2">Segunda</option>
-      <option value="3">Tercera</option>
-      <option value="4">Recreo</option>
-      <option value="5">Cuarta</option>
-      <option value="6">Quinta</option>
-      <option value="7">Sexta</option>
-      
-    </select>
-  </div>
   
   <button type="submit" class="btn btn-primary">Aceptar</button>
   <input type="hidden" name="IdAlumno" value="{{info["id"]}}"/>
