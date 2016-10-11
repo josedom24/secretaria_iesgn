@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from bottle import template,request
-from model import Amonestacion
+from model import Amonestacion,Sancion
 import sesion
 
 
@@ -11,3 +11,6 @@ def my_template(name,info={}):
 
 def CountAmonestaciones(id):
 	return Amonestacion.select().where(Amonestacion.IdAlumno==id).count()
+
+def CountSanciones(id):
+	return Sancion.select().where(Sancion.IdAlumno==id).count()

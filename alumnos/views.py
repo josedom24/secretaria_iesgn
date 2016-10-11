@@ -4,6 +4,7 @@ import os
 import sesion
 import hashlib
 import time
+import calendar
 from gestiona import *
 from beaker.middleware import SessionMiddleware
 from model import *
@@ -35,6 +36,7 @@ def amonestacion(id):
         info["dia"]=time.strftime('%d/%m/%Y')
         info["profesor"]=Profesor.select() 
         info["alumno"]=Alumno.get(Alumno.id==id)
+        info["menu"]="alumnos"
         return my_template('amonestacion.tpl',info=info)
     else:
         redirect('/')
@@ -55,6 +57,26 @@ def sancion(id):
         info["dia"]=time.strftime('%d/%m/%Y')
         info["profesor"]=Profesor.select() 
         info["alumno"]=Alumno.get(Alumno.id==id)
+        info["menu"]="alumnos"
         return my_template('sancion.tpl',info=info)
+    else:
+        redirect('/')
+
+@route('/alumnos/sancion/new',method='post')
+def sancion_new():
+    if sesion.islogin():
+        Sancion.create(**request.forms)
+        redirect('/alumnos')
+    else:
+        redirect('/')
+
+
+@route('/alumnos/amonestacion/resumen',method='get')
+def amonestacion_resumen():
+    if sesion.islogin():
+        info={}
+        c = calendar.HTMLCalendar(calendar.MONDAY)
+        info["cal"]=c.formatmonth(int(time.strftime('%Y')),int(time.strftime('%m')))
+        return my_template('amonestacion_resumen.tpl',info=info)
     else:
         redirect('/')

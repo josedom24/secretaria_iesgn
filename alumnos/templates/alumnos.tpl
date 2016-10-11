@@ -28,7 +28,7 @@
  <br/><h2>Alumnos - {{curso}}</h2>
 
 <table class="table table-bordered">
-    <tr><td>N.</td><td>Alumno</td><td>A/S</td><td>A</td><td>S</td><td>Mod.</td><td>Borrar</td></tr>
+    <tr><td>N.</td><td>Alumno</td><td>A/S</td><td>A</td><td>S</td><td>Hist.</td><td>Mod.</td><td>Borrar</td></tr>
     <% 
     cont=0
     for r in info["alumnos"]:
@@ -39,7 +39,7 @@
         
         
       <td>{{r.Nombre}}</td>
-      <td>{{CountAmonestaciones(r.get_id())}}/0</td>
+      <td>{{CountAmonestaciones(r.get_id())}}/{{CountSanciones(r.get_id())}}</td>
       <td><a href="alumnos/amonestacion/{{r.get_id()}}"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></a></td>
       <td><a href="alumnos/sancion/{{r.get_id()}}"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a></td>
       <td><a href="alumnos/historial/{{r.get_id()}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></td>
