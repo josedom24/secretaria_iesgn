@@ -1,4 +1,5 @@
 % include('header.tpl',info=info)
+% from gestiona import *
 
  <h3>Búsqueda</h3>
  <form action="/alumnos" method="post" class="form-hotizontal">
@@ -38,7 +39,7 @@
         
         
       <td>{{r.Nombre}}</td>
-      <td>0/0</td>
+      <td>{{CountAmonestaciones(r.get_id())}}/0</td>
       <td><a href="alumnos/amonestacion/{{r.get_id()}}"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></a></td>
       <td><a href="alumnos/sancion/{{r.get_id()}}"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a></td>
       <td><a href="alumnos/historial/{{r.get_id()}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></td>
