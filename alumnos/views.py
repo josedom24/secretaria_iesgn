@@ -42,6 +42,7 @@ def amonestacion(id):
 @route('/alumnos/amonestacion/new',method='post')
 def amonestacion_new():
     if sesion.islogin():
-        return request.forms.get("fecha")
+        Amonestacion.create(**request.forms)
+        redirect('/alumnos')
     else:
         redirect('/')

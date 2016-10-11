@@ -6,17 +6,17 @@
 
   <div class="form-group">
     <label>Fecha</label>
-       <input type="text" value="{{info["dia"]}}" class="form-control" id="fecha" name="fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" required autofocus>
+       <input type="text" value="{{info["dia"]}}" class="form-control" id="fecha" name="Fecha" pattern="\d{1,2}/\d{1,2}/\d{4}" required autofocus>
   </div>
 
   <div class="form-group">
     <label>Comentario:</label>
-    <textarea class="form-control" id="comentario" rows="5" name="comentario"></textarea>
+    <textarea class="form-control" id="comentario" rows="5" name="Comentario"></textarea>
   </div>
 
   <div class="form-group">
     <label>Profesor:</label>
-    <select class="form-control" name="profesor">
+    <select class="form-control" name="Profesor">
       % for p in info["profesor"]:
 
            <option value="{{p.get_id()}}">{{p.Nombre+" "+p.Apellidos}}</option>
@@ -28,7 +28,7 @@
 
   <div class="form-group">
     <label>Hora:</label>
-    <select class="form-control" name="hora">
+    <select class="form-control" name="Hora">
       <option value="1">Primera</option>
       <option value="2">Segunda</option>
       <option value="3">Tercera</option>
@@ -40,6 +40,7 @@
   </div>
   
   <button type="submit" class="btn btn-primary">Submit</button>
+  <input type="hidden" name="IdAlumno" value="{{info["id"]}}"/>
 </form>
 
 
