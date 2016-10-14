@@ -74,9 +74,29 @@ def sancion_new():
 @route('/alumnos/amonestacion/resumen',method='get')
 def amonestacion_resumen():
     if sesion.islogin():
+        redirect('/alumnos/amonestacion/resumen/%s/%s'%(time.strftime('%Y'),time.strftime('%m')))
+    else:
+        redirect('/')
+
+@route('/alumnos/amonestacion/resumen/<year:int>/<month:int>',method='get')
+def amonestacion_resumen2(year,month):
+    if sesion.islogin() and (month>=1 and month<=12):
+        
         info={}
+        
+        info["proxmes"]=month+1
+        info["prevmes"]=month-1
+        info["proxano"]=year
+        info["prevano"]=year
+        if(info["proxmes"]>12):
+            info["proxmes"]=1
+            info["proxano"]=year+1
+        if(info["prevmes"]<1):
+            info["prevmes"]=12
+            info["prevano"]=year-1
         c = calendar.HTMLCalendar(calendar.MONDAY)
-        info["cal"]=c.formatmonth(int(time.strftime('%Y')),int(time.strftime('%m')))
+        info["cal"]=c.formatmonth(int(year),int(month))
+        info["cal"]=info["cal"].replace('class="month"','class="table-condensed table-bordered table-striped"')
         return my_template('amonestacion_resumen.tpl',info=info)
     else:
         redirect('/')
