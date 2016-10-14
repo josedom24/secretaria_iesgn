@@ -35,7 +35,7 @@ def alumnos():
     else:
         redirect('/')
 
-@route('/alumnos/<tipo>/<id:int>',method='get')
+@route('/alumnos/partes/<tipo>/<id:int>',method='get')
 def amonestacion(tipo,id):
     if sesion.islogin():
         info={}
@@ -48,7 +48,7 @@ def amonestacion(tipo,id):
     else:
         redirect('/')
 
-@route('/alumnos/<tipo>/new',method='post')
+@route('/alumnos/partes/<tipo>/new',method='post')
 def amonestacion_new(tipo):
     if sesion.islogin():
         if tipo=="amonestacion":
@@ -60,19 +60,19 @@ def amonestacion_new(tipo):
         redirect('/')
 
 
-@route('/alumnos/<tipo>/resumen',method='get')
+@route('/alumnos/partes/<tipo>/resumen',method='get')
 def amonestacion_resumen(tipo):
     if sesion.islogin():
-        redirect('/alumnos/'+tipo+'/resumen/%s/%s'%(time.strftime('%Y'),time.strftime('%m')))
+        redirect('/alumnos/partes/'+tipo+'/resumen/%s/%s'%(time.strftime('%Y'),time.strftime('%m')))
     else:
         redirect('/')
 
-@route('/alumnos/<tipo>/resumen/<year:int>/<month:int>',method='get')
+@route('/alumnos/partes/<tipo>/resumen/<year:int>/<month:int>',method='get')
 def amonestacion_resumen2(tipo,year,month):
     if sesion.islogin() and (month>=1 and month<=12):
         
         info={}
-        
+        info["tipo"]=tipo
         info["proxmes"]=month+1
         info["prevmes"]=month-1
         info["proxano"]=year
@@ -106,14 +106,14 @@ def amonestacion_resumen2(tipo,year,month):
         for dia in xrange(1,int(ult_dia)+1):
             fecha="%s/%s/%s" % (dia,month,year)
             if fecha in fechas:
-                info["cal"]=info["cal"].replace(">"+str(dia)+"<",'><a href="/alumnos/amonestacion/show/%s/%s/%s"><strong>%s</strong></a><'%(dia,month,year,dia))
+                info["cal"]=info["cal"].replace(">"+str(dia)+"<",'><a href="/alumnos/partes/%s/show/%s/%s/%s"><strong>%s</strong></a><'%(tipo,dia,month,year,dia))
 
 
         return my_template('amonestacion_resumen.tpl',info=info)
     else:
         redirect('/')
 
-@route('/alumnos/<tipo>/show/<day:int>/<month:int>/<year:int>',method='get')
+@route('/alumnos/partes/<tipo>/show/<day:int>/<month:int>/<year:int>',method='get')
 def show(tipo,day,month,year):
     if sesion.islogin():
         info={}
@@ -155,11 +155,11 @@ def historial(id):
     else:
         redirect('/')
 
-@route('/alumnos/<alum:int>/<tipo>/<id:int>/del',method='get')
+@route('/alumnos/partes/<alum:int>/<tipo>/<id:int>/del',method='get')
 def amonestacion_del_get(alum,tipo,id):
     if sesion.islogin():
         info={}
-        info["url"]="/alumnos/%s/%s/%s/del"%(alum,tipo,id)
+        info["url"]="/alumnos/partes/%s/%s/%s/del"%(alum,tipo,id)
         info["alum"]=Alumno.select().where(Alumno.id==alum)
         if tipo=="amonestacion":
             info["tipo"]="Amonestación"
@@ -171,7 +171,7 @@ def amonestacion_del_get(alum,tipo,id):
     else:
         redirect('/')
 
-@route('/alumnos/<alum:int>/<tipo>/<id:int>/del',method='post')
+@route('/alumnos/partes/<alum:int>/<tipo>/<id:int>/del',method='post')
 def amonestacion_del_post(alum,tipo,id):
     if sesion.islogin():
         if request.forms.get("respuesta")=="s":
@@ -184,5 +184,30 @@ def amonestacion_del_post(alum,tipo,id):
         redirect('/alumnos/historial/alumno/'+str(alum))
         
 
+    else:
+        redirect('/')
+
+@route('/alumnos/del/<id:int>',method='get')
+def alumno_del_get(id):
+    if sesion.islogin():
+        info={}
+        info["url"]="/alumnos/del/%s"%id
+        info["alum"]=Alumno.select().where(Alumno.id==id)
+        return my_template('alumno_del.tpl',info=info)
+    else:
+        redirect('/')
+
+
+@route('/alumnos/del/<id:int>',method='post')
+def alumno_del_post(id):
+    if sesion.islogin():
+        if request.forms.get("respuesta")=="s":
+            sql=Alumno.delete().where(Alumno.id==id)
+            sql.execute()
+            sql=Amonestacion.delete().where(Amonestacion.IdAlumno==id)
+            sql.execute()
+            sql=Sancion.delete().where(Sancion.IdAlumno==id)
+            sql.execute()
+        redirect('/alumnos')
     else:
         redirect('/')

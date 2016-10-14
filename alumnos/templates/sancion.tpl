@@ -2,7 +2,7 @@
 
  <h3>Sanción</h3>
  <h4>{{info["alumno"].Nombre+"-"+ info["alumno"].Unidad.Curso}}</h4>
- <form action="/alumnos/sancion/new" method="post">
+ <form action="/alumnos/partes/sancion/new" method="post">
 
   <div class="form-group">
     <label>Fecha:</label>

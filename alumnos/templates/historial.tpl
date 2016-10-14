@@ -32,7 +32,7 @@
         <td></td>
       %end
       <td>{{r[0].Comentario}}</td>
-      <td><a href="/alumnos/{{info["alumno"][0].id}}/{{tipo}}/{{r[0].get_id()}}/del"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a></td>
+      <td><a href="/alumnos/partes/{{info["alumno"][0].id}}/{{tipo}}/{{r[0].get_id()}}/del"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a></td>
       
       
     </tr>

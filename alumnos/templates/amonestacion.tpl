@@ -2,7 +2,7 @@
 
  <h3>Amonestación</h3>
  <h4>{{info["alumno"].Nombre+"-"+ info["alumno"].Unidad.Curso}}</h4>
- <form action="/alumnos/amonestacion/new" method="post">
+ <form action="/alumnos/partes/amonestacion/new" method="post">
 
   <div class="form-group">
     <label>Fecha:</label>
