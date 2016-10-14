@@ -2,7 +2,7 @@
 
  <h3>Modificación</h3>
  <h4>{{info["alum"][0].Nombre+"-"+ info["alum"][0].Unidad.Curso}}</h4>
- <form action={{info["url"]}}} method="post">
+ <form action={{info["url"]}} method="post">
   <div class="form-group">
             <label>Curso:</label>
             
@@ -22,10 +22,12 @@
   % campos=["Nombre","DNI","Direccion","CodPostal","Localidad","Fecha_nacimiento","Provincia","Nomtutor","Ap1tutor","Ap2tutor","Telefono1","Telefono2"]
 
   % for t,c in zip(titulos,campos):
+  % formato='pattern="\d{1,2}/\d{1,2}/\d{4}"' if c[:5]=="Fecha" else ""
+  % formato='pattern="\d{9}"' if c[:5]=="Telef" else formato
   <div class="form-group">
     <label>{{t}}:</label>
         % valor=getattr(info["alum"][0],c) if getattr(info["alum"][0],c)!=None else ""
-       <input type="text" value="{{valor}}" class="form-control" name="{{c}}"/>
+       <input type="text" value="{{valor}}" class="form-control" name="{{c}}" {{!formato}}/>
   </div>
   % #pattern="\d{1,2}/\d{1,2}/\d{4}"
   %end

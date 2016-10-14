@@ -29,7 +29,7 @@ def alumnos():
         info["cursos"]=Curso.select() 
         info["menu"]="alumnos"   
         
-        print "*************curso:%s"%curso
+        
         return my_template('alumnos.tpl',info=info)
     else:
         redirect('/')
@@ -125,9 +125,10 @@ def show(tipo,day,month,year):
             info["alumnos"]=Sancion.select().where(Sancion.Fecha==info["fecha"])
 
         
-
-        
-        return my_template('show.tpl',info=info)
+        if len(info["alumnos"])==0:
+            redirect("/alumnos")
+        else:   
+            return my_template('show.tpl',info=info)
     else:
         redirect('/')
 
@@ -149,8 +150,10 @@ def historial(id):
         info["hist"]=hist
         info["alumno"]=alum
         
-           
-        return my_template('historial.tpl',info=info)
+        if len(info["hist"])==0:
+            redirect("/alumnos")
+        else:   
+            return my_template('historial.tpl',info=info)
     else:
         redirect('/')
 
@@ -225,6 +228,7 @@ def alumno_del_get(id):
 @route('/alumnos/update/<id:int>',method='post')
 def alumno_del_get(id):
     if sesion.islogin():
-        Amonestacion.create(**request.forms)
+        Alumno.update(**request.forms).where(Alumno.id==id).execute()
+        redirect('/alumnos')
     else:
         redirect('/')
