@@ -1,7 +1,7 @@
 % include('header.tpl',info=info)
 
 
- <h3>Resumen de amonestaciones</h3>
+ <h3>{{info["titulo"]}}</h3>
  <table>
                     <tr>
                       <th colspan="7" >

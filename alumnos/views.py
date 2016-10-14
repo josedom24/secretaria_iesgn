@@ -29,8 +29,8 @@ def alumnos():
     else:
         redirect('/')
 
-@route('/alumnos/amonestacion/<id>',method='get')
-def amonestacion(id):
+@route('/alumnos/<tipo>/<id>',method='get')
+def amonestacion(tipo,id):
     if sesion.islogin():
         info={}
         info["id"]=id
@@ -38,49 +38,31 @@ def amonestacion(id):
         info["profesor"]=Profesor.select() 
         info["alumno"]=Alumno.get(Alumno.id==id)
         info["menu"]="alumnos"
-        return my_template('amonestacion.tpl',info=info)
+        return my_template(tipo+'.tpl',info=info)
     else:
         redirect('/')
 
-@route('/alumnos/amonestacion/new',method='post')
-def amonestacion_new():
+@route('/alumnos/<tipo>/new',method='post')
+def amonestacion_new(tipo):
     if sesion.islogin():
-        Amonestacion.create(**request.forms)
-        redirect('/alumnos')
-    else:
-        redirect('/')
-
-@route('/alumnos/sancion/<id>',method='get')
-def sancion(id):
-    if sesion.islogin():
-        info={}
-        info["id"]=id
-        info["dia"]=time.strftime('%d/%m/%Y')
-        info["profesor"]=Profesor.select() 
-        info["alumno"]=Alumno.get(Alumno.id==id)
-        info["menu"]="alumnos"
-        return my_template('sancion.tpl',info=info)
-    else:
-        redirect('/')
-
-@route('/alumnos/sancion/new',method='post')
-def sancion_new():
-    if sesion.islogin():
-        Sancion.create(**request.forms)
+        if tipo="amonestacion":
+            Amonestacion.create(**request.forms)
+        elif tipo="sancion":
+            Sancion.create(**request.forms)    
         redirect('/alumnos')
     else:
         redirect('/')
 
 
-@route('/alumnos/amonestacion/resumen',method='get')
-def amonestacion_resumen():
+@route('/alumnos/<tipo>/resumen',method='get')
+def amonestacion_resumen(tipo):
     if sesion.islogin():
-        redirect('/alumnos/amonestacion/resumen/%s/%s'%(time.strftime('%Y'),time.strftime('%m')))
+        redirect('/alumnos/'+tipo+'/resumen/%s/%s'%(time.strftime('%Y'),time.strftime('%m')))
     else:
         redirect('/')
 
-@route('/alumnos/amonestacion/resumen/<year:int>/<month:int>',method='get')
-def amonestacion_resumen2(year,month):
+@route('/alumnos/<tipo>/resumen/<year:int>/<month:int>',method='get')
+def amonestacion_resumen2(tipo,year,month):
     if sesion.islogin() and (month>=1 and month<=12):
         
         info={}
@@ -102,12 +84,22 @@ def amonestacion_resumen2(year,month):
         hoy=datetime.now()
         primerdia="01/%s/%s" % (hoy.month,hoy.year)
         ultimodia="%s/%s/%s" % (calendar.monthrange(hoy.year-1, hoy.month-1)[1],hoy.month,hoy.year)
-        fechas=Amonestacion.select(Amonestacion.Fecha).where(Amonestacion.Fecha>=primerdia ,Amonestacion.Fecha<=ultimodia).scalar(as_tuple=True)
+        if tipo="amonestacion":
+            info["titulo"]="Resumen de amonestaciones"
+            sql=Amonestacion.select(Amonestacion.Fecha).where(Amonestacion.Fecha>=primerdia ,Amonestacion.Fecha<=ultimodia)
+        elif tipo="sancion":
+            sql=Sancion.select(Amonestacion.Fecha).where(Amonestacion.Fecha>=primerdia ,Amonestacion.Fecha<=ultimodia)
+            info["titulo"]="Resumen de sanciones"
+        
+        fechas=[]
+        for f in sql:
+            fechas.append(f.Fecha)
+        fechas=set(fechas)
         ult_dia=calendar.monthrange(hoy.year-1, hoy.month-1)[1]
         for dia in xrange(1,int(ult_dia)+1):
             fecha="%s/%s/%s" % (dia,month,year)
             if fecha in fechas:
-                info["cal"]=info["cal"].replace(">"+str(dia)+"<",'><a href="alumnos/amonestacion/show/%s/%s/%s"><strong>%s</strong></a><'%(dia,month,year))
+                info["cal"]=info["cal"].replace(">"+str(dia)+"<",'><a href="/alumnos/amonestacion/show/%s/%s/%s"><strong>%s</strong></a><'%(dia,month,year,dia))
 
 
         return my_template('amonestacion_resumen.tpl',info=info)
