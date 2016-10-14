@@ -5,6 +5,7 @@ import sesion
 import hashlib
 import time
 import calendar
+from datetime import datetime
 from gestiona import *
 from beaker.middleware import SessionMiddleware
 from model import *
@@ -98,15 +99,15 @@ def amonestacion_resumen2(year,month):
         info["cal"]=c.formatmonth(int(year),int(month))
         info["cal"]=info["cal"].replace('class="month"','class="table-condensed table-bordered table-striped"')
 
-        hoy=datetime.datetime.now()
-        primerdia=dateMonthStart="01/%s/%s" % (hoy.month,hoy.year)
+        hoy=datetime.now()
+        primerdia="01/%s/%s" % (hoy.month,hoy.year)
         ultimodia="%s/%s/%s" % (calendar.monthrange(hoy.year-1, hoy.month-1)[1],hoy.month,hoy.year)
         fechas=Amonestacion.select(Amonestacion.Fecha).where(Amonestacion.Fecha>=primerdia ,Amonestacion.Fecha<=ultimodia).scalar(as_tuple=True)
         ult_dia=calendar.monthrange(hoy.year-1, hoy.month-1)[1]
         for dia in xrange(1,int(ult_dia)+1):
-        fecha=datetime(int(year),int(month),dia)
-        if str(fecha.date()) in fechas:
-            info["cal"]=info["cal"].replace(">"+str(dia)+"<",'><a href="alumnos/amonestacion/show/%s/%s/%s"><strong>%s</strong></a><'%(dia,month,year))
+            fecha="%s/%s/%s" % (dia,month,year)
+            if fecha in fechas:
+                info["cal"]=info["cal"].replace(">"+str(dia)+"<",'><a href="alumnos/amonestacion/show/%s/%s/%s"><strong>%s</strong></a><'%(dia,month,year))
 
 
         return my_template('amonestacion_resumen.tpl',info=info)
