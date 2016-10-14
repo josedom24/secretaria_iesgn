@@ -19,11 +19,16 @@ bottle.TEMPLATE_PATH.insert(0, alumnos_path)
 def alumnos():
     if sesion.islogin():
         info={}
-        curso="1" if request.forms.get("curso") is None else request.forms.get("curso")
-        info["params"]={"curso":curso}
+
+        curso=sesion.get("curso") if sesion.get("curso")!="" else "1" 
+        curso=curso if request.forms.get("curso") is None else request.forms.get("curso")
+        sesion.set("curso",curso)
+        print curso
+        info["curso"]=curso
         info["alumnos"]=Alumno.select().where(Alumno.Unidad==curso)
-        info["cursos"]=Curso.select()    
-        print bottle.TEMPLATE_PATH
+        info["cursos"]=Curso.select() 
+        info["menu"]="alumnos"   
+        
         
         return my_template('alumnos.tpl',info=info)
     else:
@@ -88,8 +93,9 @@ def amonestacion_resumen2(tipo,year,month):
             info["titulo"]="Resumen de amonestaciones"
             sql=Amonestacion.select(Amonestacion.Fecha).where(Amonestacion.Fecha>=primerdia ,Amonestacion.Fecha<=ultimodia)
         elif tipo=="sancion":
-            sql=Sancion.select(Sancion.Fecha).where(Sancion.Fecha>=primerdia ,Sancion.Fecha<=ultimodia)
             info["titulo"]="Resumen de sanciones"
+            sql=Sancion.select(Sancion.Fecha).where(Sancion.Fecha>=primerdia ,Sancion.Fecha<=ultimodia)
+            
         
         fechas=[]
         for f in sql:
@@ -103,5 +109,24 @@ def amonestacion_resumen2(tipo,year,month):
 
 
         return my_template('amonestacion_resumen.tpl',info=info)
+    else:
+        redirect('/')
+
+@route('/alumnos/<tipo>/show/<day:int>/<month:int>/<year:int>',method=['get','post'])
+def show(tipo,day,month,year):
+    if sesion.islogin():
+        info={}
+        info["fecha"]="%s/%s/%s"%(day,month,year)
+        if tipo=="amonestacion":
+            info["titulo"]="Resumen de amonestaciones"
+            info["alumnos"]=Amonestacion.select().where(Amonestacion.Fecha==info["fecha"])
+        elif tipo=="sancion":
+            info["titulo"]="Resumen de sanciones"
+            info["alumnos"]=Sancion.select().where(Sancion.Fecha==info["fecha"])
+
+        
+
+        
+        return my_template('show.tpl',info=info)
     else:
         redirect('/')

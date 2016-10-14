@@ -9,7 +9,7 @@
             <div class="col-xs-4">
                 <select name="curso" class="form-control">
                 % for c in info["cursos"]:
-                % if info["params"].get("curso")==str(c.get_id()):
+                % if info["curso"]==str(c.get_id()):
                   <option selected="selected" value="{{c.get_id()}}">{{c.Curso}}</option>
                 % curso=c.Curso
                 % else:
@@ -39,7 +39,7 @@
         
         
       <td>{{r.Nombre}}</td>
-      <td>{{CountAmonestaciones(r.get_id())}}/{{CountSanciones(r.get_id())}}</td>
+      <td>{{CountPartes("amonestacion",r.get_id())}}/{{CountPartes("sancion",r.get_id())}}</td>
       <td><a href="alumnos/amonestacion/{{r.get_id()}}"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></a></td>
       <td><a href="alumnos/sancion/{{r.get_id()}}"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></a></td>
       <td><a href="alumnos/historial/{{r.get_id()}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></td>
