@@ -40,7 +40,7 @@ def do_logout():
     redirect('/')
 
 __import__("alumnos.views")
-
+__import__("pdf.views")
 
 
 

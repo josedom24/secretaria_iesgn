@@ -1,7 +1,13 @@
 Beaker==1.8.0
+PyPDF2==1.26.0
 argparse==1.2.1
 bottle==0.12.9
 funcsigs==1.0.2
+html5lib==1.0b8
 peewee==2.8.3
+reportlab==3.3.0
 requests==2.11.1
+six==1.10.0
+webencodings==0.5
 wsgiref==0.1.2
+xhtml2pdf==0.0.6
