@@ -29,7 +29,7 @@ def alumnos():
     else:
         redirect('/')
 
-@route('/alumnos/<tipo>/<id>',method='get')
+@route('/alumnos/<tipo>/<id:int>',method='get')
 def amonestacion(tipo,id):
     if sesion.islogin():
         info={}
@@ -45,9 +45,9 @@ def amonestacion(tipo,id):
 @route('/alumnos/<tipo>/new',method='post')
 def amonestacion_new(tipo):
     if sesion.islogin():
-        if tipo="amonestacion":
+        if tipo=="amonestacion":
             Amonestacion.create(**request.forms)
-        elif tipo="sancion":
+        elif tipo=="sancion":
             Sancion.create(**request.forms)    
         redirect('/alumnos')
     else:
@@ -84,11 +84,11 @@ def amonestacion_resumen2(tipo,year,month):
         hoy=datetime.now()
         primerdia="01/%s/%s" % (hoy.month,hoy.year)
         ultimodia="%s/%s/%s" % (calendar.monthrange(hoy.year-1, hoy.month-1)[1],hoy.month,hoy.year)
-        if tipo="amonestacion":
+        if tipo=="amonestacion":
             info["titulo"]="Resumen de amonestaciones"
             sql=Amonestacion.select(Amonestacion.Fecha).where(Amonestacion.Fecha>=primerdia ,Amonestacion.Fecha<=ultimodia)
-        elif tipo="sancion":
-            sql=Sancion.select(Amonestacion.Fecha).where(Amonestacion.Fecha>=primerdia ,Amonestacion.Fecha<=ultimodia)
+        elif tipo=="sancion":
+            sql=Sancion.select(Sancion.Fecha).where(Sancion.Fecha>=primerdia ,Sancion.Fecha<=ultimodia)
             info["titulo"]="Resumen de sanciones"
         
         fechas=[]
