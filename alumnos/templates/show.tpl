@@ -2,7 +2,7 @@
 % from gestiona import *
 
  <h3>{{info["titulo"]}}</h3>
- <h4>{{info["fecha"]}}
+ <h4>{{info["fecha"]}}</h4>
  
  <br/><h2>Alumnos</h2>
 

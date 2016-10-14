@@ -20,7 +20,7 @@ def alumnos():
     if sesion.islogin():
         info={}
 
-        curso=sesion.get("curso") if sesion.get("curso")!=""<    else "1" 
+        curso=sesion.get("curso") if sesion.get("curso")!="" else "1" 
         curso=curso if request.forms.get("curso") is None else request.forms.get("curso")
         sesion.set("curso",curso)
         print curso
@@ -112,7 +112,7 @@ def amonestacion_resumen2(tipo,year,month):
     else:
         redirect('/')
 
-@route('/alumnos/<tipo>/show/<day:int>/<month:int>/<year:int>',method=['get','post'])
+@route('/alumnos/<tipo>/show/<day:int>/<month:int>/<year:int>',method='get')
 def show(tipo,day,month,year):
     if sesion.islogin():
         info={}
@@ -128,5 +128,55 @@ def show(tipo,day,month,year):
 
         
         return my_template('show.tpl',info=info)
+    else:
+        redirect('/')
+
+@route('/alumnos/historial/alumno/<id:int>',method='get')
+def historial(id):
+    if sesion.islogin():
+        info={}
+        alum=Alumno.select().where(Alumno.id==id)
+        amon=Amonestacion.select().where(Amonestacion.IdAlumno==id).order_by('Fecha')
+        sanc=Sancion.select().where(Sancion.IdAlumno==id).order_by('Fecha')
+        historial=list(amon)+list(sanc)
+        historial=sorted(historial, key=lambda x: x.Fecha, reverse=False)
+    
+        tipo=[]
+        for h in historial:
+            tipo.append(str(type(h)).split(".")[1][0])
+        hist=zip(historial,tipo)
+        
+        info["hist"]=hist
+        info["alumno"]=alum
+        
+           
+        return my_template('historial.tpl',info=info)
+    else:
+        redirect('/')
+
+@route('/alumnos/<alum:int>/<tipo>/<id:int>/del',method='post')
+def amonestacion_del_get(alum,tipo,id):
+    if sesion.islogin():
+        info={}
+        info["url"]="/alumnos/%s/%s/%s/del"%(alum,tipo,id)
+        info["alum"]=Alumno.select().where(Alumno.id==alum)
+        if tipo=="amonestacion":
+            info["datos"]=Amonestacion.select().where(Amonestacion.id==id)
+        elif tipo=="sancion":
+            info["datos"]=Sancion.select().where(Sancion.id==id)
+        return my_template('amonestacion_del.tpl',info=info)
+    else:
+        redirect('/')
+
+@route('/alumnos/<alum:int>/<tipo>/<id:int>/del',method='post')
+def amonestacion_del_post(alum,tipo,id):
+    if sesion.islogin():
+        if tipo=="amonestacion":
+            sql=Amonestacion.delete().where(Amonestacion.id==id)
+            sql.execute()
+        elif tipo=="sancion":
+            sql=Sancion.delete().where(Sancion.id==id)
+            sql.execute()
+        redirect('/alumnos/historial/alumno/'+str(alum))
     else:
         redirect('/')

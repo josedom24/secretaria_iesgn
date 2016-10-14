@@ -8,7 +8,7 @@ from sys import argv
 
 session_opts = {
     'session.type': 'file',
-    'session.cookie_expires': -1,
+    'session.cookie_expires': 600,
     'session.data_dir': './data',
     'session.auto': True
 }
