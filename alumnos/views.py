@@ -21,16 +21,15 @@ def alumnos():
     if sesion.islogin():
         info={}
 
-        curso=sesion.get("curso") if sesion.get("curso")!="" else "1" 
+        curso=sesion.get("curso") if sesion.get("curso")!="" else str(Curso.select()[0].get_id())
         curso=curso if request.forms.get("curso") is None else request.forms.get("curso")
         sesion.set("curso",curso)
-        print curso
         info["curso"]=curso
         info["alumnos"]=Alumno.select().where(Alumno.Unidad==curso)
         info["cursos"]=Curso.select() 
         info["menu"]="alumnos"   
         
-        
+        print "*************curso:%s"%curso
         return my_template('alumnos.tpl',info=info)
     else:
         redirect('/')
@@ -209,5 +208,23 @@ def alumno_del_post(id):
             sql=Sancion.delete().where(Sancion.IdAlumno==id)
             sql.execute()
         redirect('/alumnos')
+    else:
+        redirect('/')
+
+@route('/alumnos/update/<id:int>',method='get')
+def alumno_del_get(id):
+    if sesion.islogin():
+        info={}
+        info["url"]="/alumnos/update/%s"%id
+        info["alum"]=Alumno.select().where(Alumno.id==id)
+        info["cursos"]=Curso.select()
+        return my_template('alumno_update.tpl',info=info)
+    else:
+        redirect('/')
+
+@route('/alumnos/update/<id:int>',method='post')
+def alumno_del_get(id):
+    if sesion.islogin():
+        Amonestacion.create(**request.forms)
     else:
         redirect('/')
