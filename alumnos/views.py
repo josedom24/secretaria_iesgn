@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from bottle import app, route, template, run, static_file, error,request,response,redirect,error
 import bottle
 import os
@@ -154,15 +155,17 @@ def historial(id):
     else:
         redirect('/')
 
-@route('/alumnos/<alum:int>/<tipo>/<id:int>/del',method='post')
+@route('/alumnos/<alum:int>/<tipo>/<id:int>/del',method='get')
 def amonestacion_del_get(alum,tipo,id):
     if sesion.islogin():
         info={}
         info["url"]="/alumnos/%s/%s/%s/del"%(alum,tipo,id)
         info["alum"]=Alumno.select().where(Alumno.id==alum)
         if tipo=="amonestacion":
+            info["tipo"]="Amonestación"
             info["datos"]=Amonestacion.select().where(Amonestacion.id==id)
         elif tipo=="sancion":
+            info["tipo"]="Sanción"
             info["datos"]=Sancion.select().where(Sancion.id==id)
         return my_template('amonestacion_del.tpl',info=info)
     else:
@@ -171,12 +174,15 @@ def amonestacion_del_get(alum,tipo,id):
 @route('/alumnos/<alum:int>/<tipo>/<id:int>/del',method='post')
 def amonestacion_del_post(alum,tipo,id):
     if sesion.islogin():
-        if tipo=="amonestacion":
-            sql=Amonestacion.delete().where(Amonestacion.id==id)
-            sql.execute()
-        elif tipo=="sancion":
-            sql=Sancion.delete().where(Sancion.id==id)
-            sql.execute()
+        if request.forms.get("respuesta")=="s":
+            if tipo=="amonestacion":
+                sql=Amonestacion.delete().where(Amonestacion.id==id)
+                sql.execute()
+            elif tipo=="sancion":
+                sql=Sancion.delete().where(Sancion.id==id)
+                sql.execute()
         redirect('/alumnos/historial/alumno/'+str(alum))
+        
+
     else:
         redirect('/')
