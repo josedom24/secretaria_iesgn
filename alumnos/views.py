@@ -71,6 +71,7 @@ def amonestacion_resumen2(tipo,year,month):
     if sesion.islogin() and (month>=1 and month<=12):
         
         info={}
+
         info["tipo"]=tipo
         info["proxmes"]=month+1
         info["prevmes"]=month-1
@@ -116,6 +117,8 @@ def amonestacion_resumen2(tipo,year,month):
 def show(tipo,day,month,year):
     if sesion.islogin():
         info={}
+        info["menu"]="resumen"
+        info["tipo"]=tipo
         info["fecha"]="%s/%s/%s"%(day,month,year)
         if tipo=="amonestacion":
             info["titulo"]="Resumen de amonestaciones"

@@ -23,13 +23,37 @@ def alumnos_partes(curso):
 		response.headers['Content-Disposition'] = 'attachment; filename="partes.pdf"'
 		
 		info={}
-        info["curso"]=Curso.select().where(Curso.id==curso)[0].Curso
-        info["alumnos"]=Alumno.select().where(Alumno.Unidad==curso)
-        info["titulo"]="Resumen de Amonestaciones/Sanciones"
-        info["fecha"]=time.strftime("%d/%m/%Y")
+		info["curso"]=Curso.select().where(Curso.id==curso)[0].Curso
+		info["alumnos"]=Alumno.select().where(Alumno.Unidad==curso)
+		info["titulo"]="Resumen de Amonestaciones/Sanciones"
+		info["fecha"]=time.strftime("%d/%m/%Y")
 
-        pdf_data= my_template('listado.tpl',info=info)	
-        pdf = StringIO()
-        pisa.CreatePDF(StringIO(pdf_data.encode('utf-8')), pdf)
-        pdf.reset()
-        return pdf.readlines()
+		pdf_data= my_template('listado.tpl',info=info)	
+		pdf = StringIO()
+		pisa.CreatePDF(StringIO(pdf_data.encode('utf-8')), pdf)
+		pdf.reset()
+		return pdf.readlines()
+	else:
+		redirect("/")
+
+@route("/pdf/alumnos/resumen/amonestacion/<day:int>/<month:int>/<year:int>")
+def alumnos_resumen_amonestacion(day,month,year):
+	if sesion.islogin():
+		response.headers['Content-Type'] = 'application/pdf; charset=UTF-8'
+		response.headers['Content-Disposition'] = 'attachment; filename="amonestacion.pdf"'
+		
+		info={}
+		info["fecha"]="%s/%s/%s"%(day,month,year)
+		info["titulo"]="Resumen de amonestaciones"
+		info["alumnos"]=Amonestacion.select().where(Amonestacion.Fecha==info["fecha"])
+
+		pdf_data= my_template('resumen_amonestacion.tpl',info=info)	
+		pdf = StringIO()
+		pisa.CreatePDF(StringIO(pdf_data.encode('utf-8')), pdf)
+		pdf.reset()
+		return pdf.readlines()
+	else:
+		redirect("/")
+
+
+
