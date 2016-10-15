@@ -9,6 +9,7 @@
   	% if info.has_key("menu") and info["menu"]=="alumnos":
   	<a class="btn btn-default" href="/alumnos/partes/amonestacion/resumen" role="button">Resumen de amonestaciones</a>
   	<a class="btn btn-default" href="/alumnos/partes/sancion/resumen" role="button">Resumen de sanciones</a>
+  	<a class="btn btn-default" href="/pdf/alumnos/partes/{{info["curso"]}}" role="button">Imprimir</a>
   	% end
   	
   	<a class="btn btn-default" href="/logout" role="button">Desconectar</a>
