@@ -9,18 +9,18 @@
         size: a4 landscape;
         @frame header_frame {           /* Static Frame */
             -pdf-frame-content: header_content;
-            left: 50pt; width: 512pt; top: 20pt; height: 50pt;
-            -pdf-frame-border: 1;
+            left: 50pt; width: 700pt; top: 20pt; height: 50pt;
+            
             
         }
         @frame content_frame {          /* Content Frame */
-            left: 50pt; width: 512pt; top: 90pt; height: 622pt;
-            -pdf-frame-border: 1;
+            left: 50pt; width: 700pt; top: 90pt; height: 470pt;
+            
         }
         @frame footer_frame {           /* Another static Frame */
             -pdf-frame-content: footer_content;
-            left: 50pt; width: 512pt; top: 772pt; height: 20pt;
-            -pdf-frame-border: 1;
+            left: 50pt; width: 700pt; top: 572pt; height: 20pt;
+            
         }
 
     }
@@ -72,6 +72,7 @@
     <tr>
       <td width="10%">{{cont}}</td>
       <td>{{r.IdAlumno.Nombre}}</td>
+      <td width="15%">{{r.IdAlumno.Unidad.Curso}}</td>
       <td>{{r.Sancion}}</td>
       <td width="15%">{{r.Fecha}}</td>
       <td width="15%">{{r.Fecha_fin}}</td>

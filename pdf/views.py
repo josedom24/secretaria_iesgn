@@ -58,7 +58,7 @@ def alumnos_resumen_amonestacion(day,month,year):
 @route("/pdf/alumnos/resumen/cartas/amonestacion/<day:int>/<month:int>/<year:int>")
 def carta_amonestacion(day,month,year):
 	response.headers['Content-Type'] = 'application/pdf; charset=UTF-8'
-	response.headers['Content-Disposition'] = 'attachment; filename="cartas.pdf"'
+	response.headers['Content-Disposition'] = 'attachment; filename="cartas_amonestacion.pdf"'
 	info={}
 	contenido=""
 	info["fecha"]="%s/%s/%s"%(day,month,year)
@@ -98,3 +98,24 @@ def alumnos_resumen_sancion(day,month,year):
 		return pdf.readlines()
 	else:
 		redirect("/")
+
+@route("/pdf/alumnos/resumen/carta/sancion/<id:int>")
+def carta_sancion(id):
+	response.headers['Content-Type'] = 'application/pdf; charset=UTF-8'
+	response.headers['Content-Disposition'] = 'attachment; filename="carta_sancion.pdf"'
+	info={}
+	contenido=""
+	
+	info["alumno"]=Sancion.select().where(Sancion.id==id)[0]
+	info["fecha"]={}
+	info["fecha"]["dia"]=time.strftime('%d')
+	info["fecha"]["mes"]=time.strftime('%B')
+	info["fecha"]["ano"]=time.strftime('%Y')
+	info["fecha"]["hora"]=time.strftime('%H')+":00"
+	
+
+	pdf_data= my_template('contenido_carta_sancion.tpl',info=info)	
+	pdf = StringIO()
+	pisa.CreatePDF(StringIO(pdf_data.encode('utf-8')), pdf)
+	pdf.reset()
+	return pdf.readlines()

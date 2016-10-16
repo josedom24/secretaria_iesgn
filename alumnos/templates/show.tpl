@@ -29,7 +29,7 @@
         <td>{{r.Sancion}}</td>
         <td>{{r.Fecha}}</td>
         <td>{{r.Fecha_fin}}</td>
-        <td><a href="pdf/carta/sancion/{{r.get_id()}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></td>
+        <td><a href="/pdf/alumnos/resumen/carta/sancion/{{r.get_id()}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></td>
       % end
       
     </tr>
