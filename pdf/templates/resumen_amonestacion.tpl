@@ -43,7 +43,7 @@
    
    
 <body>
-     % include ("header_footer.tpl")
+% include("header_footer.tpl")
 
  <h3>{{info["titulo"]}}</h3>
  <h4>Fecha: {{info["fecha"]}}</h4>

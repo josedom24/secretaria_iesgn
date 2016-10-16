@@ -13,8 +13,8 @@ from model import *
 
 
 base_path = os.path.abspath(os.path.dirname(__file__))
-alumnos_path = os.path.join(base_path, 'templates')
-bottle.TEMPLATE_PATH.insert(0, alumnos_path)
+pdf_path = os.path.join(base_path, 'templates')
+bottle.TEMPLATE_PATH.insert(0, pdf_path)
 
 @route('/alumnos',method=['get','post'])
 def alumnos():
