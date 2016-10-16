@@ -23,6 +23,6 @@
     <a class="btn btn-default" href="/pdf/alumnos/resumen/{{info["tipo"]}}/{{info["fecha"]}}" role="button">Imprimir resumen</a>
     
     % end
-  	
+  	<a class="btn btn-default" href="/profesores" role="button">Profesores</a>
   	<a class="btn btn-default" href="/logout" role="button">Desconectar</a>
 </div>

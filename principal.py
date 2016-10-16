@@ -41,6 +41,7 @@ def do_logout():
 
 __import__("alumnos.views")
 __import__("pdf.views")
+__import__("profesores.views")
 
 
 
