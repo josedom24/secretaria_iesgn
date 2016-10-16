@@ -73,7 +73,7 @@ def carta_amonestacion(day,month,year):
 			contenido=contenido+"<pdf:nextpage>"
 	info["contenido"]=contenido
 
-	pdf_data= my_template('carta_amonestacion.tpl',info=info)	
+	pdf_data= my_template('carta.tpl',info=info)	
 	pdf = StringIO()
 	pisa.CreatePDF(StringIO(pdf_data.encode('utf-8')), pdf)
 	pdf.reset()
@@ -103,18 +103,18 @@ def alumnos_resumen_sancion(day,month,year):
 def carta_sancion(id):
 	response.headers['Content-Type'] = 'application/pdf; charset=UTF-8'
 	response.headers['Content-Disposition'] = 'attachment; filename="carta_sancion.pdf"'
-	info={}
+	info2={}
 	contenido=""
 	
-	info["alumno"]=Sancion.select().where(Sancion.id==id)[0]
-	info["fecha"]={}
-	info["fecha"]["dia"]=time.strftime('%d')
-	info["fecha"]["mes"]=time.strftime('%B')
-	info["fecha"]["ano"]=time.strftime('%Y')
-	info["fecha"]["hora"]=time.strftime('%H')+":00"
-	
-
-	pdf_data= my_template('contenido_carta_sancion.tpl',info=info)	
+	info2["alumno"]=Sancion.select().where(Sancion.id==id)[0]
+	info2["fecha"]={}
+	info2["fecha"]["dia"]=time.strftime('%d')
+	info2["fecha"]["mes"]=time.strftime('%B')
+	info2["fecha"]["ano"]=time.strftime('%Y')
+	info2["fecha"]["hora"]=time.strftime('%H')+":00"
+	info={}
+	info["contenido"]=my_template('contenido_carta_sancion.tpl',info=info2)	
+	pdf_data= my_template('carta.tpl',info=info)	
 	pdf = StringIO()
 	pisa.CreatePDF(StringIO(pdf_data.encode('utf-8')), pdf)
 	pdf.reset()

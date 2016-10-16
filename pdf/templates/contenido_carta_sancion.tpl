@@ -17,11 +17,10 @@ Contra la presente resolución podrá presentar reclamación ante la Directora. 
 En Dos Hermanas, a <strong>{{info["fecha"]["dia"]}}</strong> de <strong>{{info["fecha"]["mes"]}}</strong> de <strong>{{info["fecha"]["ano"]}}</strong>  <br />
 <br />
 <br />
-<table align="" width="653" cellspacing="1" cellpadding="1" border="0" height="83" summary="">
-    <tbody>
+<table>
+    
         <tr>
-            <td><br />
-            </td>
+            
             <td>La Directora<br />
             <br />
             <br />
@@ -29,14 +28,16 @@ En Dos Hermanas, a <strong>{{info["fecha"]["dia"]}}</strong> de <strong>{{info["
             <br />
             <br />
             Fdo: Ana María González Solís<br />
-            <br />
-            <br />
+           <td>
             El padre/madre o tutor leagal<br />
             <br />
             <br />
-            Fdo:</td>
+            <br />
+            <br />
+            <br />
+            Fdo:__________________________________</td>
         </tr>
-    </tbody>
+    
 </table>
 <pdf:nextpage>
 
@@ -62,7 +63,7 @@ En prueba de conformidad con la celebración del acto, firma la presente:<br />
 <table align="" width="653" cellspacing="1" cellpadding="1" border="0" height="83" summary="">
     <tbody>
         <tr>
-            <td> Padre, madre o representante legal del alumno   <br />
+            <td> Padre, madre o tutor legal   <br />
             Recibido:<br />
             <br />
             <br />
@@ -76,8 +77,9 @@ En prueba de conformidad con la celebración del acto, firma la presente:<br />
             <br />
             <br />
             <br />
-            Fdo: __________________________<br />
-            </td>
+            <br />
+            Fdo:__________________________________</td>
+            
         </tr>
     </tbody>
 </table>
