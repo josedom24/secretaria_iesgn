@@ -42,7 +42,7 @@ def amonestacion(tipo,id):
         info["dia"]=time.strftime('%d/%m/%Y')
         info["profesor"]=Profesor.select() 
         info["alumno"]=Alumno.get(Alumno.id==id)
-        info["menu"]="alumnos"
+       
         return my_template(tipo+'.tpl',info=info)
     else:
         redirect('/')
@@ -117,7 +117,7 @@ def amonestacion_resumen2(tipo,year,month):
 def show(tipo,day,month,year):
     if sesion.islogin():
         info={}
-        info["menu"]="resumen"
+        info["menu"]=tipo
         info["tipo"]=tipo
         info["fecha"]="%s/%s/%s"%(day,month,year)
         if tipo=="amonestacion":

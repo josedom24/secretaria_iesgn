@@ -7,7 +7,11 @@
  <br/><h2>Alumnos</h2>
 
 <table class="table table-bordered">
-    <tr><td>N.</td><td>Alumno</td><td>Curso</td><td>A/S</td></tr>
+    % if info["tipo"]=="amonestacion":
+      <tr><td>N.</td><td>Alumno</td><td>Curso</td><td>A/S</td></tr>
+    % else:
+      <tr><td>N.</td><td>Alumno</td><td>Curso</td><td>Sanción</td><td>Fecha</td><td>Fecha fin.</td></tr>
+    % end
     <% 
     cont=0
     for r in info["alumnos"]:
@@ -19,8 +23,14 @@
         
       <td>{{r.IdAlumno.Nombre}}</td>
       <td>{{r.IdAlumno.Unidad.Curso}}</td>
-      <td>{{CountPartes("amonestacion",r.IdAlumno.get_id())}}/{{CountPartes("sancion",r.IdAlumno.get_id())}}</td>
-      
+      % if info["tipo"]=="amonestacion":
+        <td>{{CountPartes("amonestacion",r.IdAlumno.get_id())}}/{{CountPartes("sancion",r.IdAlumno.get_id())}}</td>
+      % else:
+        <td>{{r.Sancion}}</td>
+        <td>{{r.Fecha}}</td>
+        <td>{{r.Fecha_fin}}</td>
+        <td><a href="pdf/carta/sancion/{{r.get_id()}}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></td>
+      % end
       
     </tr>
     % end

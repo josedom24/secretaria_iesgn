@@ -10,6 +10,7 @@ from cStringIO import StringIO
 import sesion
 import time
 from model import *
+from gestiona import *
 
 
 base_path = os.path.abspath(os.path.dirname(__file__))
@@ -54,6 +55,46 @@ def alumnos_resumen_amonestacion(day,month,year):
 		return pdf.readlines()
 	else:
 		redirect("/")
+@route("/pdf/alumnos/resumen/cartas/amonestacion/<day:int>/<month:int>/<year:int>")
+def carta_amonestacion(day,month,year):
+	response.headers['Content-Type'] = 'application/pdf; charset=UTF-8'
+	response.headers['Content-Disposition'] = 'attachment; filename="cartas.pdf"'
+	info={}
+	contenido=""
+	info["fecha"]="%s/%s/%s"%(day,month,year)
+	info["alumnos"]=Amonestacion.select().where(Amonestacion.Fecha==info["fecha"])
+
+	for i in info["alumnos"]:
+		info2={}
+		info2["alumno"]=i
+		info2["num_amon"]=CountPartes("amonestacion",i.IdAlumno.get_id())
+		contenido=contenido+my_template('contenido_carta_amonestacion.tpl',info=info2)
+		if i.id!=info["alumnos"][-1].id:
+			contenido=contenido+"<pdf:nextpage>"
+	info["contenido"]=contenido
+
+	pdf_data= my_template('carta_amonestacion.tpl',info=info)	
+	pdf = StringIO()
+	pisa.CreatePDF(StringIO(pdf_data.encode('utf-8')), pdf)
+	pdf.reset()
+	return pdf.readlines()
 
 
+@route("/pdf/alumnos/resumen/sancion/<day:int>/<month:int>/<year:int>")
+def alumnos_resumen_sancion(day,month,year):
+	if sesion.islogin():
+		response.headers['Content-Type'] = 'application/pdf; charset=UTF-8'
+		response.headers['Content-Disposition'] = 'attachment; filename="sancion.pdf"'
+		
+		info={}
+		info["fecha"]="%s/%s/%s"%(day,month,year)
+		info["titulo"]="Resumen de sanciones"
+		info["alumnos"]=Sancion.select().where(Sancion.Fecha==info["fecha"])
 
+		pdf_data= my_template('resumen_sancion.tpl',info=info)	
+		pdf = StringIO()
+		pisa.CreatePDF(StringIO(pdf_data.encode('utf-8')), pdf)
+		pdf.reset()
+		return pdf.readlines()
+	else:
+		redirect("/")

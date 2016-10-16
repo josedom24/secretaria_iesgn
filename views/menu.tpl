@@ -12,11 +12,17 @@
   	<a class="btn btn-default" href="/pdf/alumnos/partes/{{info["curso"]}}" role="button">Imprimir</a>
   	% end
 
-  	% if info.has_key("menu") and info["menu"]=="resumen":
+  	% if info.has_key("menu") and info["menu"]=="amonestacion":
   	
   	<a class="btn btn-default" href="/pdf/alumnos/resumen/{{info["tipo"]}}/{{info["fecha"]}}" role="button">Imprimir resumen</a>
-  	<a class="btn btn-default" href="" role="button">Imprimir cartas</a>
+  	<a class="btn btn-default" href="/pdf/alumnos/resumen/cartas/{{info["tipo"]}}/{{info["fecha"]}}" role="button">Imprimir cartas</a>
   	% end
+
+    % if info.has_key("menu") and info["menu"]=="sancion":
+    
+    <a class="btn btn-default" href="/pdf/alumnos/resumen/{{info["tipo"]}}/{{info["fecha"]}}" role="button">Imprimir resumen</a>
+    
+    % end
   	
   	<a class="btn btn-default" href="/logout" role="button">Desconectar</a>
 </div>

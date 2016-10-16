@@ -34,7 +34,7 @@
       margin-bottom: 5px;
       margin-top: 2px;
     }
-    img { zoom: 50%; }
+   
     </style>
 </head>
 
@@ -43,16 +43,7 @@
    
    
 <body>
-      <!-- Content for Static Frame 'header_frame' -->
-    <div id="header_content">
-      <h3>IES Gonzalo Nazareno</h3>
-      <p>C/Las Botijas,10</p>
-      <p>41710 - Dos Hermanas (Sevilla)</p>
-      <p>Tfno: 955839911 - Fax: 955839915</p>
-    
-    </div>
- <div id="footer_content"><pdf:pagenumber> / <pdf:pagecount>
-    </div>
+      % include ("header_footer.tpl")
 
  <h3>{{info["titulo"]}}</h3>
  <h4>Fecha: {{info["fecha"]}} - Curso: {{info["curso"]}}</h4>
