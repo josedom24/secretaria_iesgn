@@ -9,6 +9,7 @@ from xhtml2pdf import pisa
 from cStringIO import StringIO
 import sesion
 import time
+import locale
 from model import *
 from gestiona import *
 
@@ -108,6 +109,7 @@ def carta_sancion(id):
 	
 	info2["alumno"]=Sancion.select().where(Sancion.id==id)[0]
 	info2["fecha"]={}
+	locale.setlocale(locale.LC_ALL, "")
 	info2["fecha"]["dia"]=time.strftime('%d')
 	info2["fecha"]["mes"]=time.strftime('%B')
 	info2["fecha"]["ano"]=time.strftime('%Y')
