@@ -5,6 +5,7 @@ import os
 import sesion
 from beaker.middleware import SessionMiddleware
 from model import *
+from gestiona import *
 
 
 base_path = os.path.abspath(os.path.dirname(__file__))
