@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from bottle import template,request
-from model import Amonestacion,Sancion
+from model import Amonestacion,Sancion,Curso
 import sesion
 
 
@@ -16,6 +16,16 @@ def CountPartes(tipo,id):
 		return Sancion.select().where(Sancion.IdAlumno==id).count()	
 	else:
 		return 0
+
+def profesor_curso(id):
+	tutores=[]
+	cursos=Curso.select()
+	for curso in cursos:
+		tutores.append(curso.Tutor.id if curso.Tutor!=None else "*")
+	if id in tutores:
+		return Curso.select().where(Curso.Tutor==id)[0].Curso
+	else:
+		return ""
 
 
 	
