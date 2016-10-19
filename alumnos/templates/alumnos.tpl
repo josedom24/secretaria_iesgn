@@ -8,6 +8,8 @@
             <label class="control-label col-xs-1">Curso:</label>
             <div class="col-xs-4">
                 <select name="curso" class="form-control">
+                % if info["curso"]=="-1":
+                % curso=""
                 % for c in info["cursos"]:
                 % if info["curso"]==str(c.get_id()):
                   <option selected="selected" value="{{c.get_id()}}">{{c.Curso}}</option>
