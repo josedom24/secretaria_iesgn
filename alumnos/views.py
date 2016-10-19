@@ -23,6 +23,7 @@ def alumnos():
 
         curso=sesion.get("curso") if sesion.get("curso")!="" else Curso.select()[0].id
         curso=curso if request.forms.get("curso") is None else request.forms.get("curso")
+        print curso
         sesion.set("curso",curso)
         info["curso"]=curso
         info["alumnos"]=Alumno.select().where(Alumno.Unidad==curso)
