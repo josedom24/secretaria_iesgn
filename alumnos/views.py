@@ -21,7 +21,7 @@ def alumnos():
     if sesion.islogin():
         info={}
 
-        curso=sesion.get("curso") if sesion.get("curso")!="" else "-1"
+        curso=sesion.get("curso") if sesion.get("curso")!="" else Curso.select()[0].id
         curso=curso if request.forms.get("curso") is None else request.forms.get("curso")
         sesion.set("curso",curso)
         info["curso"]=curso
