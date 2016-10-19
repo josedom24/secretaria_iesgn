@@ -145,4 +145,4 @@ def server_static(filepath):
 def error404(error):
     return "Nada"
 
-run(app=app,host='0.0.0.0', port=argv[1],reloader=True)
+run(app=app,host='0.0.0.0', port=8080,reloader=True)
